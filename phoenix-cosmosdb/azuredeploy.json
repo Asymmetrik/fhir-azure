@@ -110,8 +110,9 @@
                         "[resourceId('Microsoft.Web/Sites', variables('siteName'))]"
                     ],
                     "properties": {
-                        "MONGO_HOSTNAME": "[variables('cosmosAccountName')]",
-                        "RESOURCE_SERVER": "[variables('siteName')]"
+                        "RESOURCE_SERVER": "[variables('siteName')]",
+                        "MONGO_DB_NAME": "fhir",
+                        "MONGO_HOSTNAME": "[concat(variables('cosmosAccountName'), ':', uriComponent(listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('cosmosAccountName')), '2015-04-08').primaryMasterKey), '@', replace(substring(reference(concat('Microsoft.DocumentDb/databaseAccounts/', variables('cosmosAccountName')), '2015-04-08').documentEndpoint,8),'443','10255'), '?ssl=true')]"
                     }
                 }
             ]
